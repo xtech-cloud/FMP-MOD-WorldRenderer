@@ -1,0 +1,19 @@
+
+/_dist_/
+/_build_/
+/WorldRenderer/Assets/TextMesh Pro/
+/WorldRenderer/Assets/TextMesh Pro.meta
+/WorldRenderer/Assets/Plugins/
+/WorldRenderer/Assets/Plugins.meta
+/WorldRenderer/Assets/3rd/
+/WorldRenderer/Assets/3rd.meta
+/WorldRenderer/Library/
+/WorldRenderer/obj/
+/WorldRenderer/Logs/
+/WorldRenderer/Temp/
+/WorldRenderer/UserSettings/
+/WorldRenderer/*.sln
+/WorldRenderer/*.csproj
+/WorldRenderer/.vsconfig
+/WorldRenderer/.vs/
+/.UNITY_HOME.env
