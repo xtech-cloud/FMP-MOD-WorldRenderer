@@ -7,6 +7,7 @@ using UnityEngine.UI;
 using LibMVCS = XTC.FMP.LIB.MVCS;
 using XTC.FMP.MOD.WorldRenderer.LIB.Proto;
 using XTC.FMP.MOD.WorldRenderer.LIB.MVCS;
+using UnityEngine.Rendering;
 
 namespace XTC.FMP.MOD.WorldRenderer.LIB.Unity
 {
@@ -15,6 +16,16 @@ namespace XTC.FMP.MOD.WorldRenderer.LIB.Unity
     /// </summary>
     public class MyInstance : MyInstanceBase
     {
+        public class Snapshot
+        {
+            public Material skybox;
+            public Light sun;
+            public AmbientMode ambientMode;
+            public float ambientIntensity;
+            public Color ambientSkyColor;
+        }
+
+        private Snapshot snapshot_ = null;
 
         public MyInstance(string _uid, string _style, MyConfig _config, MyCatalog _catalog, LibMVCS.Logger _logger, Dictionary<string, LibMVCS.Any> _settings, MyEntryBase _entry, MonoBehaviour _mono, GameObject _rootAttachments)
             : base(_uid, _style, _config, _catalog, _logger, _settings, _entry, _mono, _rootAttachments)
@@ -43,11 +54,24 @@ namespace XTC.FMP.MOD.WorldRenderer.LIB.Unity
         /// </summary>
         /// <remarks>
         /// 可用于加载内容目录的数据
-        /// </remarks>
+
         public void HandleOpened(string _source, string _uri)
         {
             rootUI.gameObject.SetActive(true);
             rootWorld.gameObject.SetActive(true);
+
+            // 保存快照
+            snapshot_ = new Snapshot();
+            snapshot_.skybox = RenderSettings.skybox;
+            //snapshot_.sun = RenderSettings.sun;
+            snapshot_.ambientMode = RenderSettings.ambientMode;
+            snapshot_.ambientIntensity = RenderSettings.ambientIntensity;
+            snapshot_.ambientSkyColor = RenderSettings.ambientSkyColor;
+
+            // 更改渲染器
+            applySkybox();
+            applyAmbient();
+            //RenderSettings.sun = null;
         }
 
         /// <summary>
@@ -57,6 +81,36 @@ namespace XTC.FMP.MOD.WorldRenderer.LIB.Unity
         {
             rootUI.gameObject.SetActive(false);
             rootWorld.gameObject.SetActive(false);
+
+            // 恢复快照
+            RenderSettings.skybox = snapshot_.skybox;
+            //RenderSettings.sun = snapshot_.sun;
+            RenderSettings.ambientMode = snapshot_.ambientMode;
+            RenderSettings.ambientIntensity = snapshot_.ambientIntensity;
+            RenderSettings.ambientSkyColor = snapshot_.ambientSkyColor;
+        }
+
+        private void applySkybox()
+        {
+            if ("DefaultSkybox" == style_.skybox.material)
+                RenderSettings.skybox = rootAttachments.transform.Find("DefaultSkybox").GetComponent<MeshRenderer>().material;
+            else
+                RenderSettings.skybox = null;
+        }
+
+        private void applyAmbient()
+        {
+            if ("skybox" == style_.ambient.mode)
+                RenderSettings.ambientMode = AmbientMode.Skybox;
+            else
+                RenderSettings.ambientMode = AmbientMode.Flat;
+
+            Color skyboxColor;
+            if (!ColorUtility.TryParseHtmlString(style_.ambient.skyColor, out skyboxColor))
+                skyboxColor = Color.black;
+            RenderSettings.ambientSkyColor = skyboxColor;
+
+            RenderSettings.ambientIntensity = style_.ambient.intensity;
         }
     }
 }
