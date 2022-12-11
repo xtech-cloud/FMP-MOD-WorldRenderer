@@ -96,6 +96,7 @@ namespace XTC.FMP.MOD.WorldRenderer.LIB.Unity
                 RenderSettings.skybox = rootAttachments.transform.Find("DefaultSkybox").GetComponent<MeshRenderer>().material;
             else
                 RenderSettings.skybox = null;
+            logger_.Debug("current skybox is {0}", RenderSettings.skybox);
         }
 
         private void applyAmbient()
@@ -104,13 +105,16 @@ namespace XTC.FMP.MOD.WorldRenderer.LIB.Unity
                 RenderSettings.ambientMode = AmbientMode.Skybox;
             else
                 RenderSettings.ambientMode = AmbientMode.Flat;
+            logger_.Debug("current ambientMode is {0}", RenderSettings.ambientMode);
 
             Color skyboxColor;
             if (!ColorUtility.TryParseHtmlString(style_.ambient.skyColor, out skyboxColor))
                 skyboxColor = Color.black;
             RenderSettings.ambientSkyColor = skyboxColor;
+            logger_.Debug("current ambientSkyColor is {0}", RenderSettings.ambientSkyColor);
 
             RenderSettings.ambientIntensity = style_.ambient.intensity;
+            logger_.Debug("current ambientIntensity is {0}", RenderSettings.ambientIntensity);
         }
     }
 }

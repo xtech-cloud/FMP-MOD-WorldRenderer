@@ -25,12 +25,12 @@
     -->
   <Styles>
     <Style name="default">
-      <Skybox material ="none"/>
-      <Ambient mode="flat" intensity="0" skyColor="#000000"/>
-    </Style>
-    <Style name="unity_default">
       <Skybox material="DefaultSkybox"/>
       <Ambient mode="skybox" intensity="1" skyColor="#363a42"/>
+    </Style>
+    <Style name="dark">
+      <Skybox material ="none"/>
+      <Ambient mode="flat" intensity="0" skyColor="#000000"/>
     </Style>
   </Styles>
   <!-- 预创建的实例列表
