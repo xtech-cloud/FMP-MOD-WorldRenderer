@@ -34,7 +34,7 @@ namespace XTC.FMP.MOD.WorldRenderer.LIB.Unity
             public string mode { get; set; } = "";
 
             [XmlAttribute("density")]
-            public float intensity { get; set; } = 0f;
+            public float density { get; set; } = 0f;
 
             [XmlAttribute("color")]
             public string color { get; set; } = "#000000";

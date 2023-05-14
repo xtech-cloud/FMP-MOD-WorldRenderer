@@ -133,16 +133,17 @@ namespace XTC.FMP.MOD.WorldRenderer.LIB.Unity
         private void applyFog()
         {
             RenderSettings.fog = style_.fog.active;
-            if ("Linear" == FogMode.Linear.ToString())
+            if ("Linear" == style_.fog.mode)
                 RenderSettings.fogMode = FogMode.Linear;
-            else if ("Exponential" == FogMode.Exponential.ToString())
+            else if ("Exponential" == style_.fog.mode)
                 RenderSettings.fogMode = FogMode.Exponential;
-            else if ("ExponentialSquared" == FogMode.ExponentialSquared.ToString())
+            else if ("ExponentialSquared" == style_.fog.mode)
                 RenderSettings.fogMode = FogMode.ExponentialSquared;
             Color color;
             if (!ColorUtility.TryParseHtmlString(style_.fog.color, out color))
                 color = Color.black;
             RenderSettings.fogColor = color;
+            RenderSettings.fogDensity= style_.fog.density;
         }
     }
 }
