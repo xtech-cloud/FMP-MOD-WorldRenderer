@@ -22,15 +22,15 @@
       Ambient.mode: 模式，可选值为（flat,skybox）
       Ambient.intensity: 强度，范围为[0.0, 1.0]
       Ambient.skyColor: 天空颜色，RGB的HEX值
+      Fog.active:
+      Fog.mode: 雾模式，可选值为(Linear, Exponential,  ExponentialSquared)
+      Fog.density: 
     -->
   <Styles>
     <Style name="default">
       <Skybox material="DefaultSkybox"/>
       <Ambient mode="skybox" intensity="1" skyColor="#363a42"/>
-    </Style>
-    <Style name="dark">
-      <Skybox material ="none"/>
-      <Ambient mode="flat" intensity="0" skyColor="#000000"/>
+      <Fog active="false" mode="Linear" density="1" color="#363a42"/>
     </Style>
   </Styles>
   <!-- 预创建的实例列表

@@ -23,6 +23,10 @@ namespace XTC.FMP.MOD.WorldRenderer.LIB.Unity
             public AmbientMode ambientMode;
             public float ambientIntensity;
             public Color ambientSkyColor;
+            public bool fogActive;
+            public FogMode fogMode;
+            public float fogDensity;
+            public Color fogColor;
         }
 
         private Snapshot snapshot_ = null;
@@ -67,10 +71,15 @@ namespace XTC.FMP.MOD.WorldRenderer.LIB.Unity
             snapshot_.ambientMode = RenderSettings.ambientMode;
             snapshot_.ambientIntensity = RenderSettings.ambientIntensity;
             snapshot_.ambientSkyColor = RenderSettings.ambientSkyColor;
+            snapshot_.fogActive = RenderSettings.fog;
+            snapshot_.fogMode = RenderSettings.fogMode;
+            snapshot_.fogDensity = RenderSettings.fogDensity;
+            snapshot_.fogColor = RenderSettings.fogColor;
 
             // 更改渲染器
             applySkybox();
             applyAmbient();
+            applyFog();
             //RenderSettings.sun = null;
         }
 
@@ -88,6 +97,10 @@ namespace XTC.FMP.MOD.WorldRenderer.LIB.Unity
             RenderSettings.ambientMode = snapshot_.ambientMode;
             RenderSettings.ambientIntensity = snapshot_.ambientIntensity;
             RenderSettings.ambientSkyColor = snapshot_.ambientSkyColor;
+            RenderSettings.fog = snapshot_.fogActive;
+            RenderSettings.fogMode = snapshot_.fogMode;
+            RenderSettings.fogDensity = snapshot_.fogDensity;
+            RenderSettings.fogColor = snapshot_.fogColor;
         }
 
         private void applySkybox()
@@ -115,6 +128,21 @@ namespace XTC.FMP.MOD.WorldRenderer.LIB.Unity
 
             RenderSettings.ambientIntensity = style_.ambient.intensity;
             logger_.Debug("current ambientIntensity is {0}", RenderSettings.ambientIntensity);
+        }
+
+        private void applyFog()
+        {
+            RenderSettings.fog = style_.fog.active;
+            if ("Linear" == FogMode.Linear.ToString())
+                RenderSettings.fogMode = FogMode.Linear;
+            else if ("Exponential" == FogMode.Exponential.ToString())
+                RenderSettings.fogMode = FogMode.Exponential;
+            else if ("ExponentialSquared" == FogMode.ExponentialSquared.ToString())
+                RenderSettings.fogMode = FogMode.ExponentialSquared;
+            Color color;
+            if (!ColorUtility.TryParseHtmlString(style_.fog.color, out color))
+                color = Color.black;
+            RenderSettings.fogColor = color;
         }
     }
 }

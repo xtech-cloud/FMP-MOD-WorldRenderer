@@ -26,6 +26,20 @@ namespace XTC.FMP.MOD.WorldRenderer.LIB.Unity
             public string skyColor { get; set; } = "#000000";
         }
 
+        public class Fog
+        {
+            [XmlAttribute("active")]
+            public bool active { get; set; } = false;
+            [XmlAttribute("mode")]
+            public string mode { get; set; } = "";
+
+            [XmlAttribute("density")]
+            public float intensity { get; set; } = 0f;
+
+            [XmlAttribute("color")]
+            public string color { get; set; } = "#000000";
+        }
+
         public class Style
         {
             [XmlAttribute("name")]
@@ -35,6 +49,8 @@ namespace XTC.FMP.MOD.WorldRenderer.LIB.Unity
             public Skybox skybox { get; set; } = new Skybox();
             [XmlElement("Ambient")]
             public Ambient ambient { get; set; } = new Ambient();
+            [XmlElement("Fog")]
+            public Fog fog { get; set; } = new Fog();
         }
 
 

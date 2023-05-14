@@ -41,6 +41,8 @@ namespace XTC.FMP.MOD.WorldRenderer.LIB.Unity
             var data = new Dictionary<string, object>();
             data["uid"] = _uid;
             data["style"] = _style;
+            data["uiRoot"] = "";
+            data["worldRoot"] = "";
             data["uiSlot"] = _uiSlot;
             data["worldSlot"] = _worldSlot;
             modelDummy_.Publish(MySubjectBase.Create, data);
